@@ -1,24 +1,45 @@
+import {
+  asyncActionError,
+  asyncActionFinish,
+  asyncActionStart,
+} from "../../app/async/asyncReducer";
+import { delay } from "../../app/common/util/util";
+import {toast} from 'react-toastify';
 const INCREMENT_COUNTER = "INCREMENT_COUNTER";
 const DECREMENT_COUNTER = "DECREMENT_COUNTER";
 
-export function increment(amount){
-    return{
-        type: INCREMENT_COUNTER, payload: amount
+export function increment(amount) {
+  return async function (dispatch) {
+    dispatch(asyncActionStart());
+    try {
+      await delay(1000);
+      dispatch({ type: INCREMENT_COUNTER, payload: amount });
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      dispatch(asyncActionError());
     }
+  };
 }
 
-export function decrement(amount){
-    return{
-        type: DECREMENT_COUNTER, payload: amount
+export function decrement(amount) {
+  return async function (dispatch) {
+    dispatch(asyncActionStart());
+    try {
+      await delay(1000);
+      dispatch({ type: DECREMENT_COUNTER, payload: amount });
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      dispatch(asyncActionError());
+      toast.error(error);
     }
+  };
 }
-
 
 const intitialState = {
   data: 42,
 };
 
-export default function testReducer(state = intitialState, {type, payload}) {
+export default function testReducer(state = intitialState, { type, payload }) {
   switch (type) {
     case INCREMENT_COUNTER:
       return {
@@ -29,7 +50,7 @@ export default function testReducer(state = intitialState, {type, payload}) {
       return {
         ...state,
         data: state.data - payload,
-      }
+      };
     default:
       return state;
   }
