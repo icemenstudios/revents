@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
+import React from 'react';
+import { Segment, Grid, Icon } from 'semantic-ui-react';
 import { format } from 'date-fns';
 //import EventDetailedMap from './EventDetailedMap';
 
 export default function EventDetailedInfo({event}) {
-    const [mapOpen, setMapOpenToggle] = useState(false);
+   // const [mapOpen, setMapOpenToggle] = useState(false);
 
     return (
         <Segment.Group>
