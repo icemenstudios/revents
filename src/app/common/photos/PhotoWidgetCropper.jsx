@@ -1,28 +1,26 @@
-import React, { useRef } from "react";
+import React from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-
-
 export default function PhotoWidgetCropper({ setImage, imagePreview }) {
-  
-  //const cropper = useRef(null);
-  const cropperRef = useRef(null);
-  const imageElement = cropperRef?.current;
-  const cropper = imageElement?.cropper;
+
+  let cropper;
+  const onCropperInit = (component) => {
+    cropper = component;
+ };
 
   function cropImage() {
-    if (typeof cropper?.getCroppedCanvas() === "undefined") {
+    console.log(cropper);
+    if (cropper && typeof cropper.getCroppedCanvas() === 'undefined') {
       return;
-    }
-    console.log(cropper)
-    cropper.getCroppedCanvas().toBlob(blob => {
-      setImage(blob);
-    }, "image/jpeg");
+   }
+   cropper.getCroppedCanvas().toBlob((blob) => {
+    setImage(blob);
+ }, 'image/jpeg');
   }
   return (
     <Cropper
-      ref={cropperRef}
+     
       src={imagePreview}
       style={{ height: 200, width: "100%" }}
       // Cropper.js options
@@ -35,6 +33,8 @@ export default function PhotoWidgetCropper({ setImage, imagePreview }) {
       cropBoxMovable={true}
       cropBoxResizable={true}
       crop={cropImage}
+      onInitialized={onCropperInit}
     />
   );
 }
+

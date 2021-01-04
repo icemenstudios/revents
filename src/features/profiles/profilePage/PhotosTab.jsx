@@ -12,6 +12,7 @@ import {
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import { listenToUserPhotos } from "../profileActions";
 
+
 export default function PhotosTab({ profile, isCurrentUser }) {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
