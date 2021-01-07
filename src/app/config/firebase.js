@@ -10,7 +10,8 @@ const firebaseConfig = {
     projectId: "revents-course-298809",
     storageBucket: "revents-course-298809.appspot.com",
     messagingSenderId: "699517603377",
-    appId: "1:699517603377:web:c052768abf1421a2754f10"
+    appId: "1:699517603377:web:c052768abf1421a2754f10",
+    databaseURL: "https://revents-course-298809-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
 firebase.initializeApp(firebaseConfig);

@@ -36,7 +36,7 @@ if (error) return <Redirect to='/error' />
       <Grid.Column width={10}>
         <EventDetailedHeader event={event} isGoing={isGoing} isHost={isHost} />
         <EventDetailedInfo event={event} />
-        <EventDetailedChat />
+        <EventDetailedChat eventId={event.id} />
       </Grid.Column>
       <Grid.Column width={6}>
         <EventDetailedSidebar attendees={event?.attendees} hostUid={event.hostUid} />
