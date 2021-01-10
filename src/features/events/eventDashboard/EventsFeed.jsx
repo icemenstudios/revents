@@ -8,19 +8,19 @@ import EventFeedItem from "./EventFeedItem";
 export default function EventsFeed() {
   const dispatch = useDispatch();
   const { feed } = useSelector((state) => state.profile);
-
-  useEffect(() => {
-      getUserFeedRef().on('value', snapshot => {
-          if(!snapshot.exists()){
-              return;
-          }
-          const feed = firebaseObjectToArray(snapshot.val()).reverse();
-          dispatch(listenToFeed(feed))
-      })
-      return () => {
-          getUserFeedRef().off();
-      }
-  }, [dispatch])
+//tijdelijk uit omdat userfeed niet actief is...je hebt hier cloud functions voor nodig...pay as you go account in firebase
+  // useEffect(() => {
+  //     getUserFeedRef().on('value', snapshot => {
+  //         if(!snapshot.exists()){
+  //             return;
+  //         }
+  //         const feed = firebaseObjectToArray(snapshot.val()).reverse();
+  //         dispatch(listenToFeed(feed))
+  //     })
+  //     return () => {
+  //         getUserFeedRef().off();
+  //     }
+  // }, [dispatch])
 
 //   const image = "/assets/user.png";
 //   const date = "3 days ago";

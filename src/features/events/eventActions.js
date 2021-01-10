@@ -1,24 +1,28 @@
-import { fetchSampleData } from "../../app/api/mockApi";
+import {dataFromSnapshot, fetchEventsFromFirestore} from '../../app/firestore/firestoreService';
 import { asyncActionError, asyncActionStart, asyncActionFinish } from "../../app/async/asyncReducer";
-import { CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, UPDATE_EVENT } from "./eventConstants";
+import { CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, UPDATE_EVENT, LISTEN_TO_SELECTED_EVENT, CLEAR_EVENTS } from "./eventConstants";
 
-export function loadEvents(){
+export function fetchEvents(predicate, limit, lastdocSnapshot){
     return async function(dispatch) {
         dispatch(asyncActionStart())
         try {
-            const events = await fetchSampleData();
-            dispatch({type: FETCH_EVENTS, payload: events});
+            const snapshot = await fetchEventsFromFirestore(predicate, limit, lastdocSnapshot).get();
+            const lastVisible = snapshot.docs[snapshot.docs.length-1];
+            const moreEvents = snapshot.docs.length >=  limit;
+            const events = snapshot.docs.map(doc => dataFromSnapshot(doc));
+            dispatch({type: FETCH_EVENTS, payload: {events, moreEvents}});
             dispatch(asyncActionFinish());
+            return lastVisible;
         } catch (error){
             dispatch(asyncActionError(error));
         }
     }
 }
 
-export function listenToEvents(events) {
+export function listenToSeletedEvent(event) {
     return {
-        type: FETCH_EVENTS,
-        payload: events
+        type: LISTEN_TO_SELECTED_EVENT,
+        payload: event
     }
 }
 
@@ -47,5 +51,12 @@ export function listenToEventChat(comments) {
     return{
         type: LISTEN_TO_EVENT_CHAT,
         payload: comments
+    }
+}
+
+export function clearEvents() {
+    return {
+        type: CLEAR_EVENTS,
+        
     }
 }
