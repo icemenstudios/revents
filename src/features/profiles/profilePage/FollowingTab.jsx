@@ -8,7 +8,7 @@ import ProfileCard from "./ProfileCard";
 
 export default function FollowingTab({ profile, activeTab }) {
   const dispatch = useDispatch();
-  const { followings, followers } = useSelector((state) => state.profile);
+  const { followers } = useSelector((state) => state.profile);
 
   useFirestoreCollection({
     query:
